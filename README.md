@@ -1,4 +1,4 @@
-﻿# PAGOSTUYA - Registro de pagos
+# PAGOSTUYA - Registro de pagos
 
 ### Ejecución API REST
 
@@ -23,3 +23,12 @@ enviando el siguiente JSON:
     ]
 }
 ```
+## Construido con
+
+
+* [C#] - Lenguaje de programación
+* [MySql] - Motor de base de datos MySql
+* [.NET Core] - Framework de desarollo
+* [EF Core] - Framework ORM (Object Relational Mapping)
+* [EF Core tools] - Herramientas del EF Core, utilizado principalmente para administrar migraciones a BD.
+* [MySql Data EF Core] - Conector a base de datos MySql con EF Core
