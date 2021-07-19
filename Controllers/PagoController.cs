@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PagosTuya.Contexts;
@@ -25,6 +27,19 @@ namespace PagosTuya.Controllers
         {
             try
             {
+
+                //Valida que los productos ingresados existan
+                foreach (DetalleCompraDTO detalleDTO in ingresoPago.Detalles)
+                {
+                    var producto = _context.Productos.FirstOrDefault(p => p.Id == detalleDTO.ProductoId);
+                    if (producto == null)
+                    {
+                        return BadRequest(
+                        new Mensajes(Mensajes.Error.NO_EXISTE,
+                            "No existe el producto " + detalleDTO.ProductoId, null));
+                    }
+                }
+
                 Pedido pedido;
                 Factura factura;
 
@@ -69,8 +84,6 @@ namespace PagosTuya.Controllers
                 _context.Pagos.Add(pago);
 
                 await _context.SaveChangesAsync();
-
-
 
                 return Ok(ingresoPago);
             }
