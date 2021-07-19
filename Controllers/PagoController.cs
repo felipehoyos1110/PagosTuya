@@ -27,6 +27,7 @@ namespace PagosTuya.Controllers
         {
             try
             {
+                double totalDetalles = 0;
 
                 //Valida que los productos ingresados existan
                 foreach (DetalleCompraDTO detalleDTO in ingresoPago.Detalles)
@@ -38,6 +39,15 @@ namespace PagosTuya.Controllers
                         new Mensajes(Mensajes.Error.NO_EXISTE,
                             "No existe el producto " + detalleDTO.ProductoId, null));
                     }
+                    totalDetalles += detalleDTO.ValorTotal;
+                }
+
+                //Valida el total del pago
+                if (totalDetalles != ingresoPago.Total)
+                {
+                    return BadRequest(
+                    new Mensajes(Mensajes.Error.NO_COINCIDE,
+                        "La sumatoria de los detalles no coincide con el total ", null));
                 }
 
                 Pedido pedido;
